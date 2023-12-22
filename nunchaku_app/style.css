@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    background-color: black; /* Background color: black */
+    color: yellow; /* Text color: yellow */
+    text-transform: uppercase; /* Text transform: uppercase */
+    font-style: italic; /* Font style: italic */
+}
+
+#techniqueDisplay {
+    font-size: 2em;
+    margin: 20px;
+}
+
+#settings {
+    margin-top: 20px;
+}
+
+#interval {
+    margin: 0 10px;
+}
+
+#progressBarContainer {
+    width: 100%;
+    background-color: black; /* Progress bar background color: black */
+    margin-top: 20px;
+    border: 1px solid yellow; /* Optional: yellow border for visibility */
+}
+
+#progressBar {
+    width: 0%;
+    height: 20px;
+    background-color: yellow; /* Progress bar color: yellow */
+}
