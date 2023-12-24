@@ -19,11 +19,18 @@ function startDisplay() {
 }
 
 function displayTechnique() {
-    if (techniques.length === 0) return;
-    document.getElementById('techniqueDisplay').innerText = techniques[currentIndex];
-    currentIndex = (currentIndex + 1) % techniques.length;
-    resetProgressBar();
+    let selectedTechniques = getSelectedTechniques();
+    if (selectedTechniques.length === 0) return;
+
+    document.getElementById('techniqueDisplay').innerText = selectedTechniques[currentIndex];
+    currentIndex = (currentIndex + 1) % selectedTechniques.length;
 }
+
+function getSelectedTechniques() {
+    return Array.from(document.querySelectorAll('#techniquesList input[type="checkbox"]:checked'))
+        .map(checkbox => checkbox.value);
+}
+
 
 function updateSettings() {
     intervalSeconds = parseInt(document.getElementById('interval').value);
@@ -58,3 +65,35 @@ function updateProgressBar() {
         }
     }, updateInterval);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('techniques.json')
+        .then(response => response.json())
+        .then(data => {
+            populateTechniquesList(data);
+            startDisplay();
+        });
+});
+
+function populateTechniquesList(techniques) {
+    const listContainer = document.getElementById('techniquesList');
+    techniques.forEach(technique => {
+        const listItem = document.createElement('div');
+        listItem.className = 'list-group-item checkbox';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = technique;
+        checkbox.value = technique;
+        checkbox.checked = true;
+
+        const label = document.createElement('label');
+        label.htmlFor = technique;
+        label.appendChild(document.createTextNode(technique));
+
+        listItem.appendChild(checkbox);
+        listItem.appendChild(label);
+        listContainer.appendChild(listItem);
+    });
+}
+

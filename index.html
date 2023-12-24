@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,12 @@
         <label for="interval">Interval (seconds):</label>
         <input type="number" id="interval" value="3">
         <button onclick="updateSettings()">Update</button>
+        <div class="container mt-4">
+            <div id="techniquesList" class="list-group">
+                <!-- JavaScript will populate this list -->
+            </div>
+        </div>
+
     </div>
     <script src="script.js"></script>
 </body>
