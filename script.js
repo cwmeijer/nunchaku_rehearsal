@@ -1,6 +1,6 @@
 let techniques = [];
 let currentIndex = 0;
-let intervalSeconds = 3;
+let intervalSeconds = 15;
 let displayTimer;
 
 document.addEventListener('DOMContentLoaded', () => {
