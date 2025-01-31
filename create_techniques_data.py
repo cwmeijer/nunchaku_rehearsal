@@ -25,11 +25,17 @@ def main():
                        [f'{s} strike' for s in expand(numerals[4:5], strike_types[5:6])] + expand(numerals[10:15], fragment)
     blue_techniques = [f'{s} strike' for s in expand(numerals[6:8], strike_types[:3])] + expand(numerals[15:25], fragment)
 
-    all_techniques = sorted(yellow_techniques + orange_techniques + green_techniques + blue_techniques,
-                            key=lambda x: (strike_types+fragment).index(x.split(' ')[1]))
+    sorted(yellow_techniques + orange_techniques + green_techniques + blue_techniques,
+           key=lambda x: (strike_types + fragment).index(x.split(' ')[1]))
+    all_techniques_by_belt = {
+        'yellow': yellow_techniques,
+        'orange': orange_techniques,
+        'green': green_techniques,
+        'blue': blue_techniques
+    }
 
     with open('techniques.json', 'w') as f:
-        json.dump(all_techniques, f, indent=2)
+        json.dump(all_techniques_by_belt, f, indent=2)
 
 
 def expand(zero_to_two, types_):

@@ -1,4 +1,4 @@
-let techniques = [];
+let techniques = {};
 let currentIndex = 0;
 let intervalSeconds = 15;
 let displayTimer;
@@ -8,14 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             techniques = data;
+            populateTechniquesList(data);
             startDisplay();
         });
 });
 
 function startDisplay() {
     if (displayTimer) clearInterval(displayTimer);
+    resetProgressBar();
     displayTechnique();
-    displayTimer = setInterval(displayTechnique, intervalSeconds * 1000);
+    displayTimer = setInterval(() => {
+        updateProgressBar();
+        displayTechnique();
+    }, intervalSeconds * 1000);
 }
 
 function displayTechnique() {
@@ -38,26 +43,21 @@ function shuffleArray(array) {
 }
 
 function getSelectedTechniques() {
-    return Array.from(document.querySelectorAll('#techniquesList input[type="checkbox"]:checked'))
+    const selectedBeltColors = Array.from(document.querySelectorAll('#techniquesList input[type="checkbox"]:checked'))
         .map(checkbox => checkbox.value);
-}
 
+    let selectedTechniques = [];
+    selectedBeltColors.forEach(color => {
+        selectedTechniques = selectedTechniques.concat(techniques[color]);
+    });
+
+    return selectedTechniques;
+}
 
 function updateSettings() {
     intervalSeconds = parseInt(document.getElementById('interval').value);
     startDisplay();
 }
-
-function startDisplay() {
-    if (displayTimer) clearInterval(displayTimer);
-    resetProgressBar();
-    displayTechnique();
-    displayTimer = setInterval(() => {
-        updateProgressBar();
-        displayTechnique();
-    }, intervalSeconds * 1000);
-}
-
 
 function resetProgressBar() {
     document.getElementById('progressBar').style.width = '0%';
@@ -77,34 +77,26 @@ function updateProgressBar() {
     }, updateInterval);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    fetch('techniques.json')
-        .then(response => response.json())
-        .then(data => {
-            populateTechniquesList(data);
-            startDisplay();
-        });
-});
-
 function populateTechniquesList(techniques) {
     const listContainer = document.getElementById('techniquesList');
-    techniques.forEach(technique => {
+    listContainer.innerHTML = ''; // Clear existing list
+
+    Object.keys(techniques).forEach(color => {
         const listItem = document.createElement('div');
         listItem.className = 'list-group-item checkbox';
 
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.id = technique;
-        checkbox.value = technique;
+        checkbox.id = color;
+        checkbox.value = color;
         checkbox.checked = true;
 
         const label = document.createElement('label');
-        label.htmlFor = technique;
-        label.appendChild(document.createTextNode(technique));
+        label.htmlFor = color;
+        label.appendChild(document.createTextNode(color));
 
         listItem.appendChild(checkbox);
         listItem.appendChild(label);
         listContainer.appendChild(listItem);
     });
 }
-
