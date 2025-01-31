@@ -22,8 +22,19 @@ function displayTechnique() {
     let selectedTechniques = getSelectedTechniques();
     if (selectedTechniques.length === 0) return;
 
+    // Shuffle the selected techniques array
+    selectedTechniques = shuffleArray(selectedTechniques);
+
     document.getElementById('techniqueDisplay').innerText = selectedTechniques[currentIndex];
     currentIndex = (currentIndex + 1) % selectedTechniques.length;
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 }
 
 function getSelectedTechniques() {
