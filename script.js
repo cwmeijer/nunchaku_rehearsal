@@ -32,7 +32,12 @@ function displayTechnique() {
 
     if (selectedTechniques.length === 0) return;
 
-    document.getElementById('techniqueDisplay').innerText = selectedTechniques[currentIndex];
+    const techniqueDisplay = document.getElementById('techniqueDisplay');
+    techniqueDisplay.innerText = selectedTechniques[currentIndex];
+    techniqueDisplay.style.animation = 'none'; // Reset animation
+    techniqueDisplay.offsetWidth; // Force reflow
+    techniqueDisplay.style.animation = ''; // Reapply animation
+
     currentIndex = (currentIndex + 1) % selectedTechniques.length;
 }
 
