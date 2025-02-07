@@ -68,6 +68,7 @@ function updateSettings() {
     displayTechnique(); // Display the first technique immediately
     updateProgressBar(); // Update the progress bar immediately
     startDisplay(); // Restart the display with the new settings
+    $('#settings').collapse('hide'); // Hide the settings modal
 }
 
 function resetProgressBar() {
