@@ -24,11 +24,11 @@ function startDisplay() {
 }
 
 function displayTechnique() {
-    let selectedTechniques = getSelectedTechniques();
-    if (selectedTechniques.length === 0) return;
+    if (currentIndex === 0) {
+        selectedTechniques = shuffleArray(getSelectedTechniques());
+    }
 
-    // Shuffle the selected techniques array
-    selectedTechniques = shuffleArray(selectedTechniques);
+    if (selectedTechniques.length === 0) return;
 
     document.getElementById('techniqueDisplay').innerText = selectedTechniques[currentIndex];
     currentIndex = (currentIndex + 1) % selectedTechniques.length;
@@ -56,7 +56,8 @@ function getSelectedTechniques() {
 
 function updateSettings() {
     intervalSeconds = parseInt(document.getElementById('interval').value);
-    startDisplay();
+    currentIndex = 0; // Reset the current index
+    startDisplay(); // Restart the display with the new settings
 }
 
 function resetProgressBar() {
