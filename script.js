@@ -17,11 +17,13 @@ function startDisplay() {
     if (displayTimer) clearInterval(displayTimer);
     resetProgressBar();
     displayTechnique();
+    updateProgressBar(); // Update the progress bar immediately
     displayTimer = setInterval(() => {
         updateProgressBar();
         displayTechnique();
     }, intervalSeconds * 1000);
 }
+
 
 function displayTechnique() {
     if (currentIndex === 0) {
@@ -57,25 +59,29 @@ function getSelectedTechniques() {
 function updateSettings() {
     intervalSeconds = parseInt(document.getElementById('interval').value);
     currentIndex = 0; // Reset the current index
+    resetProgressBar(); // Reset the progress bar immediately
+    displayTechnique(); // Display the first technique immediately
+    updateProgressBar(); // Update the progress bar immediately
     startDisplay(); // Restart the display with the new settings
 }
 
 function resetProgressBar() {
-    document.getElementById('progressBar').style.width = '0%';
+    const progressBar = document.getElementById('progressBar');
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
+    setTimeout(() => {
+        progressBar.style.transition = `width ${intervalSeconds}s linear`;
+    }, 100); // Small delay to reapply the transition
 }
 
 function updateProgressBar() {
-    let elapsedTime = 0;
-    let updateInterval = 100; // Update every 100 milliseconds
-    let updateTimer = setInterval(() => {
-        elapsedTime += updateInterval;
-        let progressPercentage = (elapsedTime / (intervalSeconds * 1000)) * 100;
-        document.getElementById('progressBar').style.width = `${progressPercentage}%`;
-
-        if (elapsedTime >= intervalSeconds * 1000) {
-            clearInterval(updateTimer);
-        }
-    }, updateInterval);
+    const progressBar = document.getElementById('progressBar');
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
+    setTimeout(() => {
+        progressBar.style.transition = `width ${intervalSeconds}s linear`;
+        progressBar.style.width = '100%';
+    }, 100); // Small delay to reset the transition
 }
 
 function populateTechniquesList(techniques) {
