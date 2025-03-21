@@ -22,7 +22,7 @@ def main():
     yellow_techniques = [f'{s} strike' for s in expand(numerals[:2], strike_types)] + expand(numerals[:5], fragment)
     orange_techniques = [f'{s} strike' for s in expand(numerals[2:4], strike_types)] + expand(numerals[5:10], fragment)
     green_techniques = [f'{s} strike' for s in expand(numerals[4:6], strike_types[:3] + strike_types[5:6])] + \
-                       [f'{s} strike' for s in expand(numerals[4:5], strike_types[5:6])] + expand(numerals[10:15], fragment)
+                       [f'{s} strike' for s in expand(numerals[4:5], strike_types[4:5])] + expand(numerals[10:15], fragment)
     blue_techniques = [f'{s} strike' for s in expand(numerals[6:8], strike_types[:3])] + expand(numerals[15:25], fragment)
 
     sorted(yellow_techniques + orange_techniques + green_techniques + blue_techniques,
